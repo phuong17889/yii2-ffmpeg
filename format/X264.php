@@ -17,8 +17,19 @@ class X264 extends \FFMpeg\Format\Video\X264 {
 	 * @param string $audioCodec
 	 * @param string $videoCodec
 	 */
-	public function __construct($audioCodec = 'libfaac', $videoCodec = 'libx264') {
-		parent::__construct($audioCodec, $videoCodec);
-		$this->setAudioCodec("libmp3lame");
+	public function __construct($audioCodec = 'libmp3lame', $videoCodec = 'libx264') {
+		$this->setAudioCodec($audioCodec)->setVideoCodec($videoCodec);
+	}
+
+	public function hls($segment_length) {
+		$this->setAdditionalParameters([
+			'-g',
+			'60',
+			'-hls_time',
+			$segment_length,
+			'-hls_list_size',
+			'0',
+		]);
+		return $this;
 	}
 }

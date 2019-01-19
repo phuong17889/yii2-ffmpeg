@@ -29,7 +29,7 @@ class FFMpeg extends \FFMpeg\FFMpeg {
 	 * @throws InvalidArgumentException
 	 */
 	public function open($pathfile) {
-		if (null === $streams = $this->ffprobe->streams($pathfile)) {
+		if (($streams = $this->ffprobe->streams($pathfile)) === null) {
 			throw new RuntimeException(sprintf('Unable to probe "%s".', $pathfile));
 		}
 		if (0 < count($streams->videos())) {
@@ -54,5 +54,50 @@ class FFMpeg extends \FFMpeg\FFMpeg {
 			$probe = FFProbe::create($configuration, $logger, null);
 		}
 		return new static(FFMpegDriver::create($logger, $configuration), $probe);
+	}
+
+	public function __construct(FFMpegDriver $ffmpeg, FFProbe $ffprobe) {
+		$this->driver  = $ffmpeg;
+		$this->ffprobe = $ffprobe;
+	}
+
+	/**
+	 * Sets FFProbe.
+	 *
+	 * @param FFProbe
+	 *
+	 * @return FFMpeg
+	 */
+	public function setFFProbe(FFProbe $ffprobe) {
+		$this->ffprobe = $ffprobe;
+		return $this;
+	}
+
+	/**
+	 * Gets FFProbe.
+	 *
+	 * @return FFProbe
+	 */
+	public function getFFProbe() {
+		return $this->ffprobe;
+	}
+
+	/**
+	 * Sets the ffmpeg driver.
+	 *
+	 * @return FFMpeg
+	 */
+	public function setFFMpegDriver(FFMpegDriver $ffmpeg) {
+		$this->driver = $ffmpeg;
+		return $this;
+	}
+
+	/**
+	 * Gets the ffmpeg driver.
+	 *
+	 * @return FFMpegDriver
+	 */
+	public function getFFMpegDriver() {
+		return $this->driver;
 	}
 }
