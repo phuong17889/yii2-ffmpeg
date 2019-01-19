@@ -1,21 +1,25 @@
 {
-    "name": "phuong17889/yii2-ffmpeg",
-    "description": "MMPEG for yii2",
-    "type": "yii2-extension",
-    "keywords": ["yii2","extension"],
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "phuong17889",
-            "email": "phuong17889@gmail.com"
-        }
-    ],
-    "require": {
-        "yiisoft/yii2": "~2.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "phuong17889\\ffmpeg\\": ""
-        }
-    }
+	"name" : "phuong17889/yii2-ffmpeg",
+	"description" : "MMPEG for yii2",
+	"type" : "yii2-extension",
+	"keywords" : [
+		"yii2",
+		"extension"
+	],
+	"license" : "MIT",
+	"authors" : [
+		{
+			"name" : "phuong17889",
+			"email" : "phuong17889@gmail.com"
+		}
+	],
+	"require" : {
+		"yiisoft/yii2" : "~2.0.0",
+		"php-ffmpeg/php-ffmpeg" : "^0.13"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"phuong17889\\ffmpeg\\" : ""
+		}
+	}
 }
