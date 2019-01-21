@@ -2,14 +2,12 @@
 
 namespace phuong17889\ffmpeg;
 
-use Alchemy\BinaryDriver\ConfigurationInterface;
 use FFMpeg\Driver\FFMpegDriver;
 use FFMpeg\Exception\InvalidArgumentException;
 use FFMpeg\Exception\RuntimeException;
 use FFMpeg\FFProbe;
 use FFMpeg\Media\Audio;
 use phuong17889\ffmpeg\media\Video;
-use Psr\Log\LoggerInterface;
 
 class FFMpeg extends \FFMpeg\FFMpeg {
 
@@ -41,63 +39,14 @@ class FFMpeg extends \FFMpeg\FFMpeg {
 	}
 
 	/**
-	 * Creates a new FFMpeg instance.
+	 * FFMpeg constructor.
 	 *
-	 * @param array|ConfigurationInterface $configuration
-	 * @param LoggerInterface              $logger
-	 * @param FFProbe                      $probe
-	 *
-	 * @return self
+	 * @param FFMpegDriver $ffmpeg
+	 * @param FFProbe      $ffprobe
 	 */
-	public static function create($configuration = array(), LoggerInterface $logger = null, FFProbe $probe = null) {
-		if (null === $probe) {
-			$probe = FFProbe::create($configuration, $logger, null);
-		}
-		return new static(FFMpegDriver::create($logger, $configuration), $probe);
-	}
-
 	public function __construct(FFMpegDriver $ffmpeg, FFProbe $ffprobe) {
+		parent::__construct($ffmpeg, $ffprobe);
 		$this->driver  = $ffmpeg;
 		$this->ffprobe = $ffprobe;
-	}
-
-	/**
-	 * Sets FFProbe.
-	 *
-	 * @param FFProbe
-	 *
-	 * @return FFMpeg
-	 */
-	public function setFFProbe(FFProbe $ffprobe) {
-		$this->ffprobe = $ffprobe;
-		return $this;
-	}
-
-	/**
-	 * Gets FFProbe.
-	 *
-	 * @return FFProbe
-	 */
-	public function getFFProbe() {
-		return $this->ffprobe;
-	}
-
-	/**
-	 * Sets the ffmpeg driver.
-	 *
-	 * @return FFMpeg
-	 */
-	public function setFFMpegDriver(FFMpegDriver $ffmpeg) {
-		$this->driver = $ffmpeg;
-		return $this;
-	}
-
-	/**
-	 * Gets the ffmpeg driver.
-	 *
-	 * @return FFMpegDriver
-	 */
-	public function getFFMpegDriver() {
-		return $this->driver;
 	}
 }

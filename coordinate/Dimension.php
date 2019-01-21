@@ -14,6 +14,11 @@ use phuong17889\ffmpeg\media\Video;
 
 class Dimension extends \FFMpeg\Coordinate\Dimension {
 
+	/**
+	 * @param $dimension
+	 *
+	 * @return Dimension
+	 */
 	public static function instance($dimension) {
 		switch ($dimension) {
 			case Video::nHD:

@@ -34,6 +34,12 @@ class Video extends \FFMpeg\Media\Video {
 
 	private   $is_progress_started = false;
 
+	/**
+	 * @param FormatInterface $format
+	 * @param                 $output_path_file
+	 *
+	 * @return \FFMpeg\Media\Video
+	 */
 	public function save(FormatInterface $format, $output_path_file) {
 		if (!file_exists(dirname($output_path_file))) {
 			@mkdir(dirname($output_path_file), 0777, true);
@@ -41,11 +47,22 @@ class Video extends \FFMpeg\Media\Video {
 		return parent::save($format, $output_path_file);
 	}
 
+	/**
+	 * @param bool $enable
+	 *
+	 * @return $this
+	 */
 	public function hls($enable = true) {
 		$this->is_hls = $enable;
 		return $this;
 	}
 
+	/**
+	 * @param string $video_type
+	 * @param int    $segment_length
+	 *
+	 * @return $this
+	 */
 	public function addFormat($video_type = self::HD, $segment_length = 10) {
 		if ($this->is_hls) {
 			$format = new X264();
@@ -86,6 +103,10 @@ class Video extends \FFMpeg\Media\Video {
 		return $this;
 	}
 
+	/**
+	 * @param      $output_path_file
+	 * @param null $output_url_path
+	 */
 	public function export($output_path_file, $output_url_path = null) {
 		if ($output_url_path != null && substr($output_url_path, - 1) != '/') {
 			throw new InvalidArgumentException('$output_url_path must be ended with splash.');
@@ -140,6 +161,11 @@ class Video extends \FFMpeg\Media\Video {
 		}
 	}
 
+	/**
+	 * @param $output_url_path
+	 * @param $file_path
+	 * @param $type
+	 */
 	public function fixPath($output_url_path, $file_path, $type) {
 		if ($this->is_hls) {
 			if (file_exists($file_path)) {
