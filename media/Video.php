@@ -1,6 +1,7 @@
 <?php
 /**
  * Created by Navatech.
+ *
  * @project linkyes-net
  * @author  Phuong
  * @email   notteen[at]gmail.com
@@ -17,16 +18,6 @@ use phuong17889\ffmpeg\format\X264;
 use yii\helpers\Console;
 
 class Video extends \FFMpeg\Media\Video {
-
-	const nHD = 'nHD';
-
-	const qHD = 'qHD';
-
-	const SD  = 'SD';
-
-	const HD  = 'HD';
-
-	const FHD = 'FHD';
 
 	protected $videos              = [];
 
@@ -63,30 +54,11 @@ class Video extends \FFMpeg\Media\Video {
 	 *
 	 * @return $this
 	 */
-	public function addFormat($video_type = self::HD, $segment_length = 10) {
+	public function addFormat($video_type = Dimension::H720, $segment_length = 10) {
 		if ($this->is_hls) {
 			$format = new X264();
 			$format->hls($segment_length);
-			switch ($video_type) {
-				case Video::nHD:
-					$format->setKiloBitrate(360 / 2);
-					break;
-				case Video::qHD:
-					$format->setKiloBitrate(540 / 2);
-					break;
-				case Video::HD:
-					$format->setKiloBitrate(720 / 2);
-					break;
-				case Video::FHD:
-					$format->setKiloBitrate(1080 / 2);
-					break;
-				case Video::SD:
-					$format->setKiloBitrate(480 / 2);
-					break;
-				default:
-					$format->setKiloBitrate(720 / 2);
-					break;
-			}
+			$format->setKiloBitrate($video_type / 2);
 			$dimension = Dimension::instance($video_type);
 			$video     = $this;
 			$video->filters()->resize($dimension)->synchronize();
