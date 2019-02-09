@@ -1,6 +1,7 @@
 <?php
 /**
  * Created by Navatech.
+ *
  * @project linkyes-net
  * @author  Phuong
  * @email   notteen[at]gmail.com
@@ -9,10 +10,15 @@
  */
 
 namespace phuong17889\ffmpeg\coordinate;
-
-use phuong17889\ffmpeg\media\Video;
-
 class Dimension extends \FFMpeg\Coordinate\Dimension {
+
+	const H360  = 360;
+
+	const H480  = 480;
+
+	const H720  = 720;
+
+	const H1080 = 1080;
 
 	/**
 	 * @param $dimension
@@ -21,16 +27,14 @@ class Dimension extends \FFMpeg\Coordinate\Dimension {
 	 */
 	public static function instance($dimension) {
 		switch ($dimension) {
-			case Video::nHD:
+			case self::H360:
 				return new Dimension(640, 360);
-			case Video::qHD:
-				return new Dimension(960, 540);
-			case Video::HD:
+			case self::H480:
+				return new Dimension(854, 480);
+			case self::H720:
 				return new Dimension(1280, 720);
-			case Video::FHD:
+			case self::H1080:
 				return new Dimension(1920, 1080);
-			case Video::SD:
-				return new Dimension(640, 480);
 			default:
 				return new Dimension(1280, 720);
 		}
